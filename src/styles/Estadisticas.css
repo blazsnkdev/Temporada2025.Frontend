@@ -1,45 +1,384 @@
+    :root {
+        --dark-primary: #0a192f;
+        --dark-secondary: #172a45;
+        --accent-blue: #64ffda;
+        --text-primary: #ccd6f6;
+        --text-secondary: #8892b0;
+        --card-bg: #112240;
+        --border-color: rgba(100, 255, 218, 0.1);
+    }
+
+    /* Contenedor principal */
     .stats-container {
-    padding: 2rem;
+        padding: 2rem;
+        background-color: var(--dark-primary);
+        min-height: 100vh;
+        color: var(--text-primary);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        max-width: 1200px;
+        margin: 0 auto;
     }
 
-    .stat-card {
-    text-align: center;
+    /* Sección de encabezado */
+    .header-section {
+        margin-bottom: 2rem;
+        text-align: center;
     }
 
-    .stat-value {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--primary-color);
+    .header-section h1 {
+        color: var(--accent-blue);
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
     }
 
-    .stat-label {
-    font-size: 0.85rem;
-    color: var(--text-light);
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    .header-section p {
+        color: var(--text-secondary);
+        font-size: 1.2rem;
     }
 
-    .border-left-primary {
-    border-left: 0.25rem solid var(--primary-color) !important;
+    /* Botones */
+    .btn-primary {
+        background-color: transparent;
+        border: 1px solid var(--accent-blue);
+        color: var(--accent-blue);
+        padding: 0.75rem 1.5rem;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: 500;
+        margin-top: 1rem;
     }
 
-    .border-left-success {
-    border-left: 0.25rem solid var(--success-color) !important;
+    .btn-primary:hover {
+        background-color: rgba(100, 255, 218, 0.1);
     }
 
-    .border-left-danger {
-    border-left: 0.25rem solid var(--danger-color) !important;
+    .btn-apply {
+        background-color: var(--accent-blue);
+        color: var(--dark-primary);
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: 500;
     }
 
-    .border-left-warning {
-    border-left: 0.25rem solid var(--warning-color) !important;
+    .btn-apply:hover {
+        background-color: rgba(100, 255, 218, 0.8);
     }
 
-    .chart-placeholder {
-    height: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #f8f9fa;
-    border-radius: 0.35rem;
+    .btn-apply:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        background-color: var(--text-secondary);
+    }
+
+    .btn-secondary {
+        padding: 0.75rem 1.5rem;
+        background-color: transparent;
+        border: 1px solid var(--text-secondary);
+        color: var(--text-secondary);
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: 500;
+    }
+
+    .btn-secondary:hover {
+        background-color: rgba(136, 146, 176, 0.1);
+    }
+
+    /* Sección de filtros */
+    .filters-section {
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .filters-section h3 {
+        color: var(--accent-blue);
+        margin-bottom: 1.5rem;
+        font-size: 1.3rem;
+    }
+
+    .filters-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+        align-items: end;
+    }
+
+    .filter-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .filter-group label {
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: var(--text-primary);
+    }
+
+    .filter-actions {
+        display: flex;
+        gap: 1rem;
+        align-items: flex-end;
+    }
+
+    /* Inputs y selects */
+    .form-control {
+        width: 100%;
+        padding: 0.75rem;
+        background-color: rgba(10, 25, 47, 0.5);
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        color: var(--text-primary);
+        font-size: 1rem;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--accent-blue);
+        box-shadow: 0 0 0 0.2rem rgba(100, 255, 218, 0.1);
+    }
+
+    /* Tabla de estadísticas */
+    .table-section {
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .table-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .table-header h3 {
+        color: var(--accent-blue);
+        margin: 0;
+        font-size: 1.3rem;
+    }
+
+    .total-badge {
+        background-color: var(--accent-blue);
+        color: var(--dark-primary);
+        padding: 0.35rem 0.75rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .stats-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .stats-table th, .stats-table td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .stats-table th {
+        background-color: rgba(10, 25, 47, 0.7);
+        color: var(--accent-blue);
+        font-weight: 600;
+    }
+
+    .stats-table tr:hover {
+        background-color: rgba(100, 255, 218, 0.05);
+    }
+
+    .no-data {
+        text-align: center;
+        color: var(--text-secondary);
+        padding: 2rem;
+    }
+
+    /* Badges de puntuación */
+    .puntaje-badge {
+        display: inline-block;
+        padding: 0.35rem 0.75rem;
+        border-radius: 20px;
+        font-weight: 600;
+    }
+
+    .high-score {
+        background-color: #1cc88a;
+        color: white;
+    }
+
+    .medium-score {
+        background-color: #f6c23e;
+        color: #1a1a1a;
+    }
+
+    /* Botones de acción */
+    .actions-cell {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .action-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s;
+        background-color: transparent;
+    }
+
+    .view-btn {
+        color: #1cc88a;
+        border: 1px solid rgba(28, 200, 138, 0.3);
+    }
+
+    .view-btn:hover {
+        background-color: rgba(28, 200, 138, 0.1);
+    }
+
+    .edit-btn {
+        color: #f6c23e;
+        border: 1px solid rgba(246, 194, 62, 0.3);
+    }
+
+    .edit-btn:hover {
+        background-color: rgba(246, 194, 62, 0.1);
+    }
+
+    /* Paginación */
+    .pagination-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .page-btn {
+        padding: 0.5rem 1rem;
+        background-color: transparent;
+        border: 1px solid var(--border-color);
+        color: var(--text-primary);
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .page-btn:hover:not(:disabled) {
+        background-color: rgba(100, 255, 218, 0.1);
+        border-color: var(--accent-blue);
+    }
+
+    .page-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .page-info {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+    }
+
+    /* Spinner */
+    .spinner-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 200px;
+    }
+
+    .spinner {
+        border: 5px solid var(--border-color);
+        border-top: 5px solid var(--accent-blue);
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* Estilos para DatePicker */
+    .react-datepicker {
+        background-color: var(--card-bg);
+        border-color: var(--border-color);
+        font-family: inherit;
+    }
+
+    .react-datepicker__header {
+        background-color: var(--dark-secondary);
+        border-bottom-color: var(--border-color);
+    }
+
+    .react-datepicker__current-month,
+    .react-datepicker__day-name,
+    .react-datepicker__day {
+        color: var(--text-primary);
+    }
+
+    .react-datepicker__day:hover {
+        background-color: var(--accent-blue);
+        color: var(--dark-primary);
+    }
+
+    .react-datepicker__day--selected {
+        background-color: var(--accent-blue);
+        color: var(--dark-primary);
+    }
+
+    .react-datepicker__triangle {
+        display: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+        .stats-container {
+            padding: 1.5rem;
+        }
+        
+        .filters-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .filters-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .stats-table {
+            display: block;
+            overflow-x: auto;
+        }
+        
+        .header-section h1 {
+            font-size: 2rem;
+        }
+        
+        .filter-actions {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        
+        .btn-apply, .btn-secondary {
+            width: 100%;
+        }
     }
