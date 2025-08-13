@@ -1,0 +1,37 @@
+    .dashboard-container {
+    padding: 2rem;
+    }
+
+    .page-title {
+    color: var(--primary-color);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    }
+
+    .page-subtitle {
+    color: var(--text-light);
+    margin-bottom: 2rem;
+    }
+
+    .player-info p {
+    margin-bottom: 1rem;
+    }
+
+    .info-label {
+    font-weight: 600;
+    color: var(--primary-color);
+    display: inline-block;
+    width: 100px;
+    }
+
+    .token-truncated {
+    background-color: var(--secondary-color);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-family: monospace;
+    }
+
+    .quick-actions .btn {
+    margin-bottom: 1rem;
+    transition: all 0.3s;
+    }
