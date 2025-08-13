@@ -90,10 +90,34 @@ export const HttpClient = () => {
             .then(handleResponse)
             .catch(handleError);
     };
+    const put = (url, payload, httpOptions = {}) => {
+    const options = {
+        ...defaultHttpOptions,
+        ...httpOptions,
+        method: 'PUT',
+        body: JSON.stringify(payload),
+    };
+    return fetch(`${rutaBase}${url}`, options)
+        .then(handleResponse)
+        .catch(handleError);
+    };
+    const del = (url, httpOptions = {}) => {
+    const options = {
+        ...defaultHttpOptions,
+        ...httpOptions,
+        method: 'DELETE',
+    };
+    return fetch(`${rutaBase}${url}`, options)
+        .then(handleResponse)
+        .catch(handleError);
+    };
+
 
     return {
         get,
         post,
+        put, // <-- Agrega esta línea
+        del,
         parseTokenData,
     };
 };

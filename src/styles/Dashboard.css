@@ -1,37 +1,276 @@
-    .dashboard-container {
+:root {
+    --primary-color: #64ffda;
+    --secondary-color: #112240;
+    --dark-bg: #0a192f;
+    --card-bg: #172a45;
+    --text-primary: #ccd6f6;
+    --text-secondary: #8892b0;
+    --border-color: rgba(100, 255, 218, 0.1);
+    --success-color: #1cc88a;
+    --warning-color: #f6c23e;
+    --danger-color: #e74a3b;
+}
+
+/* Base Styles */
+.dashboard-container {
     padding: 2rem;
-    }
+    background-color: var(--dark-bg);
+    min-height: 100vh;
+    color: var(--text-primary);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-    .page-title {
-    color: var(--primary-color);
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    }
-
-    .page-subtitle {
-    color: var(--text-light);
+.dashboard-header {
     margin-bottom: 2rem;
-    }
+}
 
-    .player-info p {
-    margin-bottom: 1rem;
-    }
-
-    .info-label {
-    font-weight: 600;
+.page-title {
     color: var(--primary-color);
-    display: inline-block;
-    width: 100px;
-    }
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
 
-    .token-truncated {
-    background-color: var(--secondary-color);
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
-    font-family: monospace;
-    }
+.page-subtitle {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
 
-    .quick-actions .btn {
+/* Grid Layout */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Cards */
+.dashboard-card {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-header {
+    background-color: rgba(10, 25, 47, 0.7);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1.25rem 1.5rem;
+}
+
+.card-header h2 {
+    margin: 0;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/* User Profile */
+.user-profile .info-row {
+    display: flex;
     margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.info-label {
+    font-weight: 500;
+    color: var(--text-secondary);
+    min-width: 120px;
+}
+
+.info-value {
+    font-weight: 500;
+}
+
+.token-section {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.token-section h4 {
+    margin-bottom: 0.75rem;
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+.token-display {
+    background-color: rgba(10, 25, 47, 0.5);
+    padding: 0.75rem;
+    border-radius: 6px;
+    font-family: monospace;
+    word-break: break-all;
+    cursor: pointer;
+    position: relative;
+    border: 1px solid var(--border-color);
+}
+
+.toggle-token {
+    color: var(--primary-color);
+    font-size: 0.8rem;
+    margin-left: 0.5rem;
+    font-family: inherit;
+}
+
+/* Quick Actions - Estilos para botones funcionales */
+.quick-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.75rem;
+    background-color: rgba(10, 25, 47, 0.5);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    text-align: left;
+}
+
+.quick-action-btn:hover {
+    background-color: rgba(100, 255, 218, 0.1);
+    border-color: var(--primary-color);
+    transform: translateX(5px);
+}
+
+.quick-action-btn i {
+    color: var(--primary-color);
+    width: 20px;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.quick-action-btn:last-child {
+    margin-bottom: 0;
+}
+.action-btn {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 6px;
+    border: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    cursor: pointer;
     transition: all 0.3s;
+}
+
+.action-btn i {
+    font-size: 1.1rem;
+}
+
+.action-btn.primary {
+    background-color: var(--primary-color);
+    color: var(--dark-bg);
+}
+
+.action-btn.primary:hover {
+    background-color: rgba(100, 255, 218, 0.8);
+}
+
+.action-btn.secondary {
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.action-btn.secondary:hover {
+    background-color: rgba(100, 255, 218, 0.1);
+}
+
+.action-btn.tertiary {
+    background-color: transparent;
+    border: 1px solid var(--text-secondary);
+    color: var(--text-secondary);
+}
+
+.action-btn.tertiary:hover {
+    background-color: rgba(136, 146, 176, 0.1);
+}
+
+/* Recent Activity */
+.activity-item {
+    display: flex;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-icon {
+    width: 36px;
+    height: 36px;
+    background-color: rgba(100, 255, 218, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color);
+}
+
+.activity-content p {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.activity-content small {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
+
+/* Stats Summary */
+.stats-summary .card-body {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    text-align: center;
+}
+
+.stat-item {
+    padding: 1rem;
+}
+
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0.25rem;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
     }
+    
+    .stats-summary .card-body {
+        grid-template-columns: 1fr;
+    }
+    
+    .page-title {
+        font-size: 2rem;
+    }
+}

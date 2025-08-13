@@ -56,7 +56,7 @@ export const Layout = ({ children }) => {
                     </NavLink>
                     
                     <NavLink to="/estadisticas" className="nav-link">
-                        <i className="fas fa-chart-network"></i>
+                        <i className="fas fa-chart-line"></i>
                         {!sidebarCollapsed && <span>Estadísticas</span>}
                     </NavLink>
                 </nav>

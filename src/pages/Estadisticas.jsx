@@ -3,8 +3,11 @@ import { useState, useEffect, useMemo } from 'react';
 import { HttpClient } from '../services/http.service';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { useNavigate } from 'react-router-dom'; // Importa useNavigate
 
 export const Estadisticas = () => {
+     const navigate = useNavigate(); // Añade esta línea
+    
     const [allEstadisticas, setAllEstadisticas] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -238,10 +241,16 @@ export const Estadisticas = () => {
                                         </td>
                                         <td>{formatDate(est.fechaRegistro)}</td>
                                         <td className="actions-cell">
-                                            <button className="action-btn view-btn">
+                                            <button 
+                                                className="action-btn view-btn"
+                                                onClick={() => navigate(`/estadisticas/${est.idEstadistica || est.id}`)}
+                                            >
                                                 <i className="fas fa-eye"></i>
                                             </button>
-                                            <button className="action-btn edit-btn">
+                                            <button 
+                                                className="action-btn edit-btn"
+                                                onClick={() => navigate(`/editar/${est.idEstadistica || est.id}`)}
+                                            >
                                                 <i className="fas fa-edit"></i>
                                             </button>
                                         </td>
