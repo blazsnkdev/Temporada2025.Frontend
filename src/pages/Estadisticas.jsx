@@ -121,16 +121,16 @@ export const Estadisticas = () => {
 
     return (
         <div className="stats-container">
-            {/* Header */}
             <div className="header-section">
                 <h1>Estadísticas</h1>
                 <p>Rendimiento por jornada</p>
-                <button className="btn-primary">
+                <button className="btn-primary" 
+                onClick={() => window.location.href = "/registrar"}>
+                    
                     <i className="fas fa-plus"></i> Nueva Estadística
                 </button>
             </div>
 
-            {/* Filtros y Totales */}
             <div className="filters-section">
                 <div className="filters-header">
                     <h3>Filtros por Jornada</h3>
