@@ -3,11 +3,10 @@ import { useState, useEffect, useMemo } from 'react';
 import { HttpClient } from '../services/http.service';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useNavigate } from 'react-router-dom'; // Importa useNavigate
+import { useNavigate } from 'react-router-dom';
 
 export const Estadisticas = () => {
-     const navigate = useNavigate(); // Añade esta línea
-    
+    const navigate = useNavigate();
     const [allEstadisticas, setAllEstadisticas] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -24,25 +23,30 @@ export const Estadisticas = () => {
         itemsPerPage: 5,
     });
 
-    // Obtener todos los datos
     useEffect(() => {
-        const fetchAllEstadisticas = async () => {
-            try {
-                setLoading(true);
-                const http = HttpClient();
-                const response = await http.get('estadistica');
-                setAllEstadisticas(response.data || response);
-            } catch (err) {
-                setError('Error al cargar las estadísticas');
-                console.error('Error fetching estadisticas:', err);
-            } finally {
-                setLoading(false);
+    const fetchAllEstadisticas = async () => {
+        try {
+            setLoading(true);
+            const http = HttpClient();
+            const response = await http.get('estadistica');
+            
+            // Verificar si la respuesta está vacía (corregido)
+            if (!response || (Array.isArray(response) && response.length === 0)) {
+                setAllEstadisticas([]);
+                return;
             }
-        };
+            
+            setAllEstadisticas(response.data || response);
+        } catch (err) {
+            setError('Error al cargar las estadísticas');
+            console.error('Error fetching estadisticas:', err);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-        fetchAllEstadisticas();
-    }, []);
-
+    fetchAllEstadisticas();
+}, []);
     // Procesar datos: filtrar, calcular totales y paginar
     const { estadisticas, totalItems, totalGoles, totalAsistencias } = useMemo(() => {
         let filtered = [...allEstadisticas];
@@ -114,22 +118,61 @@ export const Estadisticas = () => {
 
     const formatDate = (dateString) => new Date(dateString).toLocaleDateString('es-ES');
 
+    // Estados de carga y error
     if (loading && allEstadisticas.length === 0) {
-        return <div className="spinner-container"><div className="spinner"></div></div>;
+        return (
+            <div className="stats-container">
+                <div className="spinner-container">
+                    <div className="spinner"></div>
+                </div>
+            </div>
+        );
     }
 
     if (error) {
-        return <div className="alert alert-danger">{error}</div>;
+        return (
+            <div className="stats-container">
+                <div className="alert alert-danger">{error}</div>
+            </div>
+        );
     }
 
+    // Cuando no hay registros
+    if (allEstadisticas.length === 0) {
+        return (
+            <div className="stats-container">
+                <div className="header-section">
+                    <h1>Estadísticas</h1>
+                    <p>Rendimiento por jornada</p>
+                </div>
+                
+                <div className="no-records-message">
+                    <div className="empty-state">
+                        <i className="fas fa-database empty-icon"></i>
+                        <h3>No hay registros de estadísticas</h3>
+                        <p>Parece que aún no has registrado ninguna estadística.</p>
+                        <button 
+                            className="btn-primary"
+                            onClick={() => navigate("/registrar")}
+                        >
+                            <i className="fas fa-plus"></i> Crear primera estadística
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    // Renderizado normal cuando hay datos
     return (
         <div className="stats-container">
             <div className="header-section">
                 <h1>Estadísticas</h1>
                 <p>Rendimiento por jornada</p>
-                <button className="btn-primary" 
-                onClick={() => window.location.href = "/registrar"}>
-                    
+                <button 
+                    className="btn-primary" 
+                    onClick={() => navigate("/registrar")}
+                >
                     <i className="fas fa-plus"></i> Nueva Estadística
                 </button>
             </div>
@@ -137,7 +180,6 @@ export const Estadisticas = () => {
             <div className="filters-section">
                 <div className="filters-header">
                     <h3>Filtros por Jornada</h3>
-                    
                 </div>
 
                 <div className="filters-grid">
@@ -227,42 +269,34 @@ export const Estadisticas = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {estadisticas.length > 0 ? (
-                                estadisticas.map((est, index) => (
-                                    <tr key={index}>
-                                        <td>{formatDate(est.fechaJornada)}</td>
-                                        <td>{est.partidosJugados}</td>
-                                        <td>{est.goles}</td>
-                                        <td>{est.asistencias}</td>
-                                        <td>
-                                            <span className={`puntaje-badge ${est.puntaje >= 3 ? 'high-score' : 'medium-score'}`}>
-                                                {est.puntaje}
-                                            </span>
-                                        </td>
-                                        <td>{formatDate(est.fechaRegistro)}</td>
-                                        <td className="actions-cell">
-                                            <button 
-                                                className="action-btn view-btn"
-                                                onClick={() => navigate(`/estadisticas/${est.idEstadistica || est.id}`)}
-                                            >
-                                                <i className="fas fa-eye"></i>
-                                            </button>
-                                            <button 
-                                                className="action-btn edit-btn"
-                                                onClick={() => navigate(`/editar/${est.idEstadistica || est.id}`)}
-                                            >
-                                                <i className="fas fa-edit"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))
-                            ) : (
-                                <tr>
-                                    <td colSpan="7" className="no-data">
-                                        No se encontraron registros
+                            {estadisticas.map((est, index) => (
+                                <tr key={index}>
+                                    <td>{formatDate(est.fechaJornada)}</td>
+                                    <td>{est.partidosJugados}</td>
+                                    <td>{est.goles}</td>
+                                    <td>{est.asistencias}</td>
+                                    <td>
+                                        <span className={`puntaje-badge ${est.puntaje >= 3 ? 'high-score' : 'medium-score'}`}>
+                                            {est.puntaje}
+                                        </span>
+                                    </td>
+                                    <td>{formatDate(est.fechaRegistro)}</td>
+                                    <td className="actions-cell">
+                                        <button 
+                                            className="action-btn view-btn"
+                                            onClick={() => navigate(`/estadisticas/${est.idEstadistica || est.id}`)}
+                                        >
+                                            <i className="fas fa-eye"></i>
+                                        </button>
+                                        <button 
+                                            className="action-btn edit-btn"
+                                            onClick={() => navigate(`/editar/${est.idEstadistica || est.id}`)}
+                                        >
+                                            <i className="fas fa-edit"></i>
+                                        </button>
                                     </td>
                                 </tr>
-                            )}
+                            ))}
                         </tbody>
                     </table>
                 </div>
